@@ -21,7 +21,7 @@ def executeMultipartRequestAndReturnResponse(url, cookie, authToken, uploadFile,
     }
     
     if(uploadFile){
-        multipart.addFilePart(k, v)
+        multipart.addFilePart('file', uploadFile)
     }
     
     multipart.finish()
