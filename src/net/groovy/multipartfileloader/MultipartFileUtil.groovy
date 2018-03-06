@@ -82,7 +82,7 @@ class MultipartFileUtil {
      * @param name - name of the header field
      * @param value - value of the header field
      */
-    def addHeaderField(String name, String value) {
+    def addHeaderField(name, value) {
         writer.append("${name}:${value}").append(LINE_FEED)
         writer.flush()
     }
