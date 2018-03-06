@@ -2,7 +2,7 @@
 
 This util allows you to build and perform requests containing multipart files.
 
-##Usage example:
+## Usage example:
 
 ```groovy
 def executeMultipartRequestAndReturnResponse(url, body = null, cookie = null, auth = null, headers = null) {
