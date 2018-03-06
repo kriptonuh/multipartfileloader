@@ -3,8 +3,7 @@ package net.groovy.multipartfileloader
 /**
  * Util for uploading multipart files on the server
  */
-
-class MultipartFileUtility {
+class MultipartFileUtil {
 
     static final String LINE_FEED = "\r\n"
     static final charset = "UTF-8"
@@ -20,7 +19,7 @@ class MultipartFileUtility {
      * @param charset
      * @throws IOException
      */
-    MultipartFileUtility(requestURL, accessToken, cookie = null) throws IOException {
+    MultipartFileUtil(requestURL, accessToken, cookie = null) throws IOException {
         // creates a unique boundary based on time stamp
         boundary = "===${System.currentTimeMillis()}==="
 
@@ -44,7 +43,7 @@ class MultipartFileUtility {
      * @param value field value
      */
     def addFormField(name, value) {
-        writer.append("--${boundary}${LINE_FEED}")
+        writer.append("--${boundary}").append(LINE_FEED)
         writer.append("Content-Disposition: form-data; name=\"${name}\"").append(LINE_FEED)
         writer.append("Content-Type: text/plain; charset=${charset}").append(LINE_FEED)
         writer.append(LINE_FEED)
@@ -68,12 +67,8 @@ class MultipartFileUtility {
         writer.append(LINE_FEED)
         writer.flush()
 
-        FileInputStream inputStream = new FileInputStream(uploadFile)
-        byte[] buffer = new byte[4096]
-        int bytesRead = -1
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead)
-        }
+        def inputStream = new FileInputStream(uploadFile)
+        outputStream << inputStream
         outputStream.flush()
         inputStream.close()
 
@@ -97,7 +92,7 @@ class MultipartFileUtility {
      *
      * @return HttpURLConnection
      */
-    def finish(){
+    def finish() {
         writer.append(LINE_FEED).flush()
         writer.append("--${boundary}--").append(LINE_FEED)
         writer.close()
